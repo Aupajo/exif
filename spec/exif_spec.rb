@@ -17,6 +17,13 @@ describe Exif do
     expect(data.gps_date_stamp).to eq Time.new(2013,9,10)
   end
 
+  it 'works with an IO object' do
+    file_path = File.expand_path('../sample.jpg', __FILE__)
+    io = File.new(file_path)
+    data = Exif::Data.new(io)
+    expect(data.model).to eq 'NIKON D600'
+  end
+
   it 'raises errors' do
     expect{ Exif::Data.new(File.expand_path('../not_readable.jpg', __FILE__)) }.to raise_error(Exif::NotReadble)
   end
